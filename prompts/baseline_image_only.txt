@@ -1,0 +1,7 @@
+Based on the given image accompanying the article,
+infer the article text's stance toward the target issue.
+
+The response should be in the form of a single word:
+'supportive', 'neutral', or 'oppositional'.
+
+Target Issue: {issue}

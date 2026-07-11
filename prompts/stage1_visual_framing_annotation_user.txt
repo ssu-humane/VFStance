@@ -1,0 +1,5 @@
+<context>
+- Target Issue: {issue}
+- News Headline: {headline}
+- News Article: {article}
+</context>
