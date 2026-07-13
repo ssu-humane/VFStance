@@ -4,9 +4,9 @@
 This example script runs the entire VFStanceGen pipeline with open-weight
 models, demonstrating that the framework is training-free and modular:
 
-  Stage 1 (visual-framing annotation) : google/gemma-3-12b-it
-  Stage 2 (stance-aware T2I)          : stabilityai/stable-diffusion-3.5-medium
-  Stage 3 (stance prediction)         : google/gemma-3-12b-it
+  Stage 1 (visual-framing annotation) : OpenGVLab/InternVL3-14B-Instruct
+  Stage 2 (stance-aware T2I)          : stabilityai/stable-diffusion-3.5-large
+  Stage 3 (stance prediction)         : OpenGVLab/InternVL3-14B-Instruct
 
 It reuses the same prompts, data format, and output conventions as the
 Gemini-based scripts (stage1_annotate_visual_framing.py, stage2_generate_image.py,
@@ -17,8 +17,9 @@ Usage:
   python vfstancegen_open.py --stage 1 --limit 10  # run a single stage
 
 Notes:
-  - Models are loaded one stage at a time and released between stages, so the
-    full pipeline fits on a single ~40GB GPU (Gemma-3-12B in bf16 is the peak).
+  - Models are loaded one stage at a time and released between stages;
+    InternVL3-14B in bf16 (~30GB) is the peak, so a single ~40GB GPU suffices.
+  - HF_TOKEN is read from a .env file (--env-file) for gated model downloads.
   - The Stage 1 prompt asks for Korean outputs (see
     prompts/stage1_visual_framing_annotation_system.txt), so `include_subjects`
     may contain Korean strings. SD 3.5's text encoders are primarily trained on
@@ -54,9 +55,23 @@ DEFAULT_OUTPUT_ROOT = VFSTANCEGEN_ROOT / "outputs" / "open"
 DEFAULT_STAGE1_SYSTEM_PROMPT = SUBMISSION_CODE_ROOT / "prompts" / "stage1_visual_framing_annotation_system.txt"
 DEFAULT_STAGE1_USER_PROMPT = SUBMISSION_CODE_ROOT / "prompts" / "stage1_visual_framing_annotation_user.txt"
 DEFAULT_STAGE3_PROMPT = SUBMISSION_CODE_ROOT / "prompts" / "stage3_stance_prediction.txt"
-DEFAULT_LVLM = "google/gemma-3-12b-it"
-DEFAULT_T2I = "stabilityai/stable-diffusion-3.5-medium"
+DEFAULT_LVLM = "OpenGVLab/InternVL3-14B-Instruct"
+DEFAULT_T2I = "stabilityai/stable-diffusion-3.5-large"
+DEFAULT_ENV_PATH = SUBMISSION_CODE_ROOT / ".env"
 STANCE_LABELS = ("supportive", "neutral", "oppositional")
+
+
+def load_hf_token(env_file):
+    """Load HF_TOKEN from a .env file and export it for gated model downloads."""
+    import os
+    from dotenv import load_dotenv
+
+    load_dotenv(env_file)
+    token = os.getenv("HF_TOKEN")
+    if token:
+        os.environ.setdefault("HUGGING_FACE_HUB_TOKEN", token)
+        os.environ.setdefault("HF_HUB_TOKEN", token)
+    return token
 
 
 def load_prompt_template(path):
@@ -75,9 +90,9 @@ def release_gpu(*objects):
 def load_lvlm(model_name, dtype):
     from transformers import AutoModelForImageTextToText, AutoProcessor
 
-    processor = AutoProcessor.from_pretrained(model_name)
+    processor = AutoProcessor.from_pretrained(model_name, trust_remote_code=True)
     model = AutoModelForImageTextToText.from_pretrained(
-        model_name, torch_dtype=dtype, device_map="auto"
+        model_name, torch_dtype=dtype, device_map="auto", trust_remote_code=True
     )
     model.eval()
     return model, processor
@@ -316,6 +331,8 @@ def parse_args():
                         help="Open-weight LVLM for Stages 1 and 3")
     parser.add_argument("--t2i", type=str, default=DEFAULT_T2I,
                         help="Open-weight T2I model for Stage 2")
+    parser.add_argument("--env-file", type=Path, default=DEFAULT_ENV_PATH,
+                        help=".env file containing HF_TOKEN for gated models")
     parser.add_argument("--stage1-system-prompt", type=Path, default=DEFAULT_STAGE1_SYSTEM_PROMPT)
     parser.add_argument("--stage1-user-prompt", type=Path, default=DEFAULT_STAGE1_USER_PROMPT)
     parser.add_argument("--stage3-prompt", type=Path, default=DEFAULT_STAGE3_PROMPT)
@@ -332,6 +349,7 @@ def parse_args():
 
 def main():
     args = parse_args()
+    load_hf_token(args.env_file)
     stages = ["1", "2", "3"] if args.stage == "all" else [args.stage]
     runners = {"1": run_stage1, "2": run_stage2, "3": run_stage3}
     for stage in stages:
