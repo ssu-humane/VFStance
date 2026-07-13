@@ -4,9 +4,9 @@
 This example script runs the entire VFStanceGen pipeline with open-weight
 models, demonstrating that the framework is training-free and modular:
 
-  Stage 1 (visual-framing annotation) : OpenGVLab/InternVL3-14B-Instruct
-  Stage 2 (stance-aware T2I)          : stabilityai/stable-diffusion-3.5-large
-  Stage 3 (stance prediction)         : OpenGVLab/InternVL3-14B-Instruct
+  Stage 1 (visual-framing annotation)              : OpenGVLab/InternVL3-14B-Instruct
+  Stage 2 (stance-aware image generation)          : stabilityai/stable-diffusion-3.5-large
+  Stage 3 (stance prediction)                      : OpenGVLab/InternVL3-14B-Instruct
 
 It reuses the same prompts, data format, and output conventions as the
 Gemini-based scripts (stage1_annotate_visual_framing.py, stage2_generate_image.py,
@@ -14,18 +14,7 @@ stage3_predict_stance.py), replacing the Batch API calls with local inference.
 
 Usage:
   python vfstancegen_open.py --stage all           # run stages 1 -> 2 -> 3
-  python vfstancegen_open.py --stage 1 --limit 10  # run a single stage
-
-Notes:
-  - Models are loaded one stage at a time and released between stages;
-    InternVL3-14B in bf16 (~30GB) is the peak, so a single ~40GB GPU suffices.
-  - HF_TOKEN is read from a .env file (--env-file) for gated model downloads.
-  - The Stage 1 prompt asks for Korean outputs (see
-    prompts/stage1_visual_framing_annotation_system.txt), so `include_subjects`
-    may contain Korean strings. SD 3.5's text encoders are primarily trained on
-    English; if generation quality suffers, consider translating the subject
-    strings before Stage 2.
-  - Requires: torch, transformers>=4.50, diffusers, accelerate, sentencepiece.
+  python vfstancegen_open.py --stage 1             # run a single stage
 """
 
 import argparse
