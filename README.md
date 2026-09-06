@@ -1,6 +1,5 @@
-# VFSTtanceGen
-
-# VFStanceGen
+# VFStance
+[![arXiv](https://img.shields.io/badge/arXiv-2609.00685-b31b1b.svg?style=flat)](https://arxiv.org/abs/2609.00685)
 
 Official repository for **"Visual Framing for News Stance Detection via Generated Images"**.
 
