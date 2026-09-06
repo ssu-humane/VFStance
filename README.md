@@ -1,88 +1,123 @@
 # VFStance
-[![arXiv](https://img.shields.io/badge/arXiv-2609.00685-b31b1b.svg?style=flat)](https://arxiv.org/abs/2609.00685)
 
-Official repository for **"Visual Framing for News Stance Detection via Image Generation"**.
+Official implementation of **Visual Framing for News Stance Detection via Image Generation** ([paper](https://arxiv.org/abs/2609.00685)).
 
-VFStanceGen is a three-stage framework that leverages visual framing theory to generate stance-aware images and predict article-level news stance:
+The repository includes:
 
-1. **Stage 1 — Visual Framing Annotation**: an LLM annotates an article into a structured visual-framing specification (ideological, connotative, stylistic-semiotic, denotative).
-2. **Stage 2 — Stance-Aware Image Generation**: a T2I model generates an image from the specification.
-3. **Stage 3 — Stance Prediction**: an LVLM predicts the stance from the article text and the generated image.
+- `vfstance`: VFStance and VFStance (Text)
+- `baseline`: textual, visual, multimodal, and LVLM baselines
+- `eaig4sd`: the image-generation and selection baseline
+- `evaluation`: metrics, run aggregation, and significance testing
 
-## Repository Structure
+## Installation
 
-- `vfstancegen/` — main pipeline (Stages 1–3); includes `vfstancegen_open.py` for running the full pipeline with open-weight models
-- `baseline/` — textual, visual, multimodal, and LVLM baselines
-- `eaig4sd/` — EAIG4SD baseline reproduction
-- `evaluation/` — metric aggregation and significance testing
-- `prompts/` — prompt templates for all stages
-
-## Setup
+Install the dependencies with pip:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-Place the dataset under `data/` and create a `.env` file with your API keys (see `README` in each directory for details).
-
-## Running
+Alternatively, create the provided Conda environment:
 
 ```bash
-python vfstancegen/stage1_annotate_visual_framing.py
-python vfstancegen/stage2_generate_image.py
-python vfstancegen/stage3_predict_stance.py
-
-# or with open-weight models:
-python vfstancegen/vfstancegen_open.py --stage all
+conda env create -f environment.yml
+conda activate vfstance
 ```
----
 
-## 📑 Dataset Structure Example
+For API-based experiments, create `.env` in the repository root:
+
+```text
+GOOGLE_API_KEY=...
+OPENAI_API_KEY=...
+```
+
+## Dataset
+
+K-News-Stance-MM is not included in this repository. Follow [`data/instructions.md`](data/instructions.md) to request the dataset, then place it at:
+
+```text
+data/k-news-stance-mm.json
+```
+
+Each record follows this structure:
 
 ```json
 {
-    "id": "...",
-    "issue": "'개 식용 금지법' 국회 본회의 통과",
-    "genre": "analysis",
-    "news_outlet": "...",
-    "link": "...",
-    "publish_date": "...",
-    "headline": "...",
-    "images": [
-        { "url": "...", "caption": "..." },
-        { "url": "...", "caption": "..." }
-    ],
-    "article": "...",
-    "article_stance": "neutral"
+  "id": 42,
+  "issue": "'개 식용 금지법' 국회 본회의 통과",
+  "genre": "analysis",
+  "news_outlet": "...",
+  "link": "...",
+  "publish_date": "...",
+  "headline": "...",
+  "images": [
+    { "url": "...", "caption": "..." },
+    { "url": "...", "caption": "..." }
+  ],
+  "article": "...",
+  "article_stance": "neutral",
+  "split": "test"
 }
 ```
 
----
+`article_stance` is one of `supportive`, `neutral`, or `oppositional`. Original news images are not distributed; only their source URLs are provided in `images[].url`. VFStance and VFStance (Text) do not require the original images. Visual and multimodal baselines require users to download the relevant images as described in the dataset instructions.
 
-## 📥 How to Access the Dataset
+The dataset is licensed under [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/).
 
-The dataset **is NOT included directly** in this repository.  
-To download and use the dataset:
+## Running VFStance
 
-1. Open:
-   ```
-   VFStance/data/instructions.md
-   ```
-2. Fill out the **Download Form** linked in the instructions file.
-3. A download link for **k-news-stance.json** will be sent to your email.
-4. After receiving the file, place it into:
-   ```
-   VFStance/data/k-news-stance-mm.json
-   ```
+Run all commands from the repository root. VFStance consists of visual-framing annotation, image generation, and multimodal stance prediction:
 
-**This dataset is licensed under the Creative Commons Attribution-NonCommercial 4.0 International License.**
+```bash
+# Stage 1: article -> visual-framing annotation
+python vfstance/stage1_annotate_visual_framing.py --split test
 
----
+# Stage 2: annotation -> generated image
+python vfstance/stage2_generate_image.py
+
+# Stage 3: article + generated image -> stance
+python vfstance/stage3_predict_stance.py --input-mode multimodal
 ```
 
-# License & Attribution
-The code is shared under [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0).
-```
-information will be added upon publication.
+Outputs are written under `vfstance/outputs/`.
+
+### VFStance (Text)
+
+VFStance (Text) skips image generation and supplies the visual description directly to the stance predictor. Run Stage 1 followed by:
+
+```bash
+python vfstance/stage3_predict_stance.py --input-mode text
 ```
 
+Use `--help` on any script to view its paths, model settings, and asynchronous Batch API options.
+
+## Open-Weight Experiments
+
+The appendix's fully open configuration uses InternVL3-14B-Instruct for visual-framing annotation and stance prediction, and Stable Diffusion 3.5 Large for image generation. Install the additional dependencies and run:
+
+```bash
+pip install -r requirements-open.txt
+python vfstance/run_open.py --stage all
+```
+
+See [`vfstance/OPEN_MODELS.md`](vfstance/OPEN_MODELS.md) for the paper settings, hardware notes, stage-by-stage substitutions, and the InternVL/Gemma comparison commands.
+
+## Baselines and Evaluation
+
+```bash
+# LVLM baselines
+python baseline/lvlm/predict.py --help
+
+# Evaluation
+python evaluation/metrics.py path/to/results_dir
+
+# EAIG4SD
+cd eaig4sd
+CONDA_ENV_NAME=myenv NUM_SHARDS=1 bash run_all.sh
+```
+
+## License & Attribution
+
+The code is shared under [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/).
+
+Citation and attribution information will be added upon publication.
