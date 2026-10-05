@@ -100,8 +100,6 @@ pip install -r requirements-open.txt
 python vfstance/run_open.py --stage all
 ```
 
-See [`vfstance/OPEN_MODELS.md`](vfstance/OPEN_MODELS.md) for the paper settings, hardware notes, stage-by-stage substitutions, and the InternVL/Gemma comparison commands.
-
 ## Baselines and Evaluation
 
 ```bash
