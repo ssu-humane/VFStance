@@ -108,12 +108,12 @@ translation (Gemini Batch API) of the `issue`, `headline`, and `article` fields;
 the Korean release, so records can be joined across languages by `id`. Each record
 additionally carries a `language` field (`en`, `zh`, `id`, `ar`).
 
-| Language | File | Articles |
+| Language | File |
 | --- | --- | --- |
-| English | `translated/en.json` | 907 |
-| Chinese | `translated/zh.json` | 907 |
-| Indonesian | `translated/id.json` | 907 |
-| Arabic | `translated/ar.json` | 907 |
+| English | `translated/en.json` |
+| Chinese | `translated/zh.json` 
+| Indonesian | `translated/id.json` |
+| Arabic | `translated/ar.json` |
 
 To run the pipeline on a translation, point every stage at it:
 
