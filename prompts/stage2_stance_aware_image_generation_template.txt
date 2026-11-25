@@ -1,4 +1,0 @@
-An {style}-style image.
-Include the following: {include_subjects}.
-Composition is {composition}, {angle} angle and {distance} shot. Saturation is {saturation}, luminosity is {luminosity}.
-Exclude the following: {exclude_subjects}.

@@ -1,9 +1,0 @@
-Based on the given article text and an image accompanying this article,
-analyze the article text's stance toward the target issue.
-
-The response should be in the form of a single word:
-'supportive', 'neutral', or 'oppositional'.
-
-Target Issue: {issue}
-News headline: {headline}
-News article: {article}
