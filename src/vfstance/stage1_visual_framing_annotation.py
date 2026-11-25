@@ -27,7 +27,7 @@ from .utils import (
     read_text,
 )
 
-DEFAULT_MAX_TOKENS = {"api": 16000, "open": 1024}
+DEFAULT_MAX_TOKENS = {"api": 16000, "open": 16000}
 
 
 def build_prompt(prompt_template, article):
