@@ -9,7 +9,7 @@ and the images that the article was published with.
 
 The dataset is not distributed directly in this repository.
 
-1. Open the **Download Form** (the URL will be added upon publication).
+1. Open the **[Download Form](https://form.jotform.com/263286262535461)**.
 2. Submit the requested information.
 3. A download link is sent to your email.
 4. Place the files as follows:
