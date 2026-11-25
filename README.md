@@ -89,8 +89,6 @@ huggingface-cli login
 bash scripts/run_all.sh --config full --backend open
 ```
 
-Stage 1 retries responses that are not valid JSON (`--max-retries`, default 1), and Stage 3 normalizes a verbose response down to one of the three labels. Each stage runs as its own process and releases its model when it ends, so the GPU memory peak stays at one model.
-
 ### Models
 
 | Stage | `--backend api` | `--backend open` |
