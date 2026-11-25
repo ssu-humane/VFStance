@@ -1,0 +1,50 @@
+VFStance comes with two licenses: one for the code and one for the dataset.
+
+================================================================================
+1. Code -- MIT License
+================================================================================
+
+Applies to everything in this repository except the dataset files described in
+section 2: `src/`, `scripts/`, `prompts/`, `docs/`, and `README.md`.
+
+MIT License
+
+Copyright (c) 2026 Dahyun Lee, Jiyoung Han, Kunwoo Park
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+================================================================================
+2. Dataset (K-News-Stance-MM) -- CC BY-NC 4.0
+================================================================================
+
+Applies to the dataset distributed for `data/k_news_stance_mm/` (the Korean
+release and its English, Chinese, Indonesian, and Arabic translations), which is
+obtained through the download form described in `data/README.md`.
+
+K-News-Stance-MM is licensed under the Creative Commons
+Attribution-NonCommercial 4.0 International License (CC BY-NC 4.0):
+https://creativecommons.org/licenses/by-nc/4.0/
+
+You may share and adapt the dataset for non-commercial purposes with
+appropriate attribution. Commercial use is not permitted.
+
+The dataset contains news article text whose copyright remains with the
+respective publishers; it is redistributed for non-commercial research use only.
+Original news images are not redistributed -- the dataset provides their source
+URLs, and each publisher's terms govern their use.

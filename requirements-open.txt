@@ -1,0 +1,10 @@
+-r requirements.txt
+torch>=2.6
+torchvision
+transformers>=4.50
+accelerate
+diffusers
+sentencepiece
+protobuf
+einops
+timm
