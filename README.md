@@ -9,7 +9,7 @@ VFStance leverages visual framing to make implicit stance cues in news articles 
 3. **Stance Detection**: an LVLM predicts the article's stance from the article and the generated image.
 
 <p align="center">
-  <img src="assets/overview.png" width="90%">
+  <img src="assets/overview.png" width="100%">
 </p>
 
 ## Installation
