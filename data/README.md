@@ -109,7 +109,7 @@ the Korean release, so records can be joined across languages by `id`. Each reco
 additionally carries a `language` field (`en`, `zh`, `id`, `ar`).
 
 | Language | File |
-| --- | --- | --- |
+| --- | --- |
 | English | `translated/en.json` |
 | Chinese | `translated/zh.json` 
 | Indonesian | `translated/id.json` |
