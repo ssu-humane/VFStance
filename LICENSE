@@ -4,8 +4,8 @@ VFStance comes with two licenses: one for the code and one for the dataset.
 1. Code -- MIT License
 ================================================================================
 
-Applies to everything in this repository except the dataset files described in
-section 2: `src/`, `scripts/`, `prompts/`, `docs/`, and `README.md`.
+Applies to everything in this repository except the dataset described in
+section 2 and the third-party news content noted below.
 
 MIT License
 
@@ -29,22 +29,27 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
+Third-party news content: excerpts of news articles quoted in `docs/` remain
+the copyright of their respective publishers and are not covered by the MIT
+License. They are included for illustrative research purposes only.
+
 ================================================================================
-2. Dataset (K-News-Stance-MM) -- CC BY-NC 4.0
+2. Dataset (K-News-Stance-MM) -- Gated Access under a Data Use Agreement
 ================================================================================
 
-Applies to the dataset distributed for `data/k_news_stance_mm/` (the Korean
-release and its English, Chinese, Indonesian, and Arabic translations), which is
-obtained through the download form described in `data/README.md`.
+K-News-Stance-MM is not included in this repository. To respect the
+intellectual property rights of the original news publishers, it is released
+under gated access with a custom Data Use Agreement. Access instructions are
+provided in `data/README.md`.
 
-K-News-Stance-MM is licensed under the Creative Commons
-Attribution-NonCommercial 4.0 International License (CC BY-NC 4.0):
-https://creativecommons.org/licenses/by-nc/4.0/
+To obtain the dataset, prospective users must submit an access request
+describing their research purpose and agree to the following terms:
 
-You may share and adapt the dataset for non-commercial purposes with
-appropriate attribution. Commercial use is not permitted.
+  1. The dataset may be used only for non-commercial academic research.
+  2. The dataset may not be redistributed, shared, or published, in whole or
+     in part, to any third party.
+  3. Publications using the dataset must cite the VFStance paper.
 
-The dataset contains news article text whose copyright remains with the
-respective publishers; it is redistributed for non-commercial research use only.
-Original news images are not redistributed -- the dataset provides their source
-URLs, and each publisher's terms govern their use.
+Copyright in the underlying news articles and images remains with the
+respective publishers. Original news images are not distributed; the dataset
+provides their source URLs, and each publisher's terms govern their use.
