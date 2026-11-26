@@ -1,6 +1,6 @@
 # VFStance
 
-Official implementation of **Visual Framing for News Stance Detection via Image Generation** (EMNLP 2026) [[paper](https://aclanthology.org/2026.emnlp-main.2524/)] [[arXiv](https://arxiv.org/abs/2609.00685)].
+Official implementation of **Visual Framing for News Stance Detection via Image Generation** (EMNLP 2026) [[paper](https://aclanthology.org/2026.emnlp-main.2524/)].
 
 VFStance leverages visual framing to make implicit stance cues in news articles explicit through image generation. It consists of three stages:
 
@@ -105,7 +105,8 @@ These are only defaults: any model can be swapped in on either backend with `--m
 
 ## License
 
-The code is shared under the MIT License, and K-News-Stance-MM under [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/). See [`LICENSE`](LICENSE).
+- Data: To respect the intellectual property rights of the original news publishers, K-News-Stance-MM is released under gated access with a custom Data Use Agreement: prospective users must submit an access request describing their research purpose and agree to terms that restrict use to non-commercial academic research and prohibit redistribution.
+- Code: The code is shared under the MIT License. 
 
 ## Citation
 
