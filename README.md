@@ -44,8 +44,6 @@ data/k_news_stance_mm/translated/{en,zh,id,ar}.json     # translated test split
 
 Each record provides `issue`, `headline`, `article`, and a `stance` label that is one of `supportive`, `neutral`, or `oppositional`; see [`data/README.md`](data/README.md) for the full schema, the split statistics, an example record, and the translations. VFStance does not use the original news images; only their source URLs are provided in `images[].url`.
 
-The dataset is licensed under [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/).
-
 ## Running VFStance
 
 Run all commands from the repository root. Each stage reads the outputs of the previous stage and writes its own outputs under `outputs/`.
