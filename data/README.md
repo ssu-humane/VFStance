@@ -139,9 +139,4 @@ where `index` is the zero-based position in the record's `images` list.
 
 ## License
 
-K-News-Stance-MM is licensed under
-[CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/): share and adapt
-for non-commercial purposes with attribution. The article text remains the
-copyright of the respective publishers and is redistributed for non-commercial
-research use only. See [`../LICENSE`](../LICENSE) for how this relates to the
-code license. Download-form and citation details will be added upon publication.
+See [`../LICENSE`](../LICENSE).
